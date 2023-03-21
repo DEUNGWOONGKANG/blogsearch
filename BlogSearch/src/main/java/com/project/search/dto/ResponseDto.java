@@ -9,24 +9,24 @@ import lombok.Getter;
 
 @Getter
 public class ResponseDto {
-		//API¸¦ ÅëÇØ Á¶È¸µÈ ¸ñ·Ï
+		//APIë¥¼ í†µí•´ ì¡°íšŒëœ ëª©ë¡
 		private List<Map<String, Object>> content;
 		
-		//ÆäÀÌÂ¡ Ã³¸®¸¦ À§ÇÑ °´Ã¼µé
+		//í˜ì´ì§• ì²˜ë¦¬ë¥¼ ìœ„í•œ ê°ì²´ë“¤
 	    private int page;
 	    private int size;
 	    private long totalCount;
 	    
 		public ResponseDto(Map<String, Object> searchResult, String apiUrl, Pageable pageable) {
 			if(apiUrl.equals("kakao")) {
-				//Ä«Ä«¿À °Ë»öAPI response 
+				//ì¹´ì¹´ì˜¤ ê²€ìƒ‰API response 
 				Map meta = (Map) searchResult.get("meta");
 				this.page = pageable.getPageNumber();
 				this.size = pageable.getPageSize();
 				this.totalCount = Long.parseLong(meta.get("total_count").toString());
 				this.content = (List) searchResult.get("documents");
 			}else if(apiUrl.equals("naver")) {
-				//³×ÀÌ¹ö °Ë»öAPI response
+				//ë„¤ì´ë²„ ê²€ìƒ‰API response
 				this.page = pageable.getPageNumber();
 				this.size = pageable.getPageSize(); 
 				this.totalCount = Long.parseLong(searchResult.get("total").toString());

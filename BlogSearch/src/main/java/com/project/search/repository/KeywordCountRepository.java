@@ -16,10 +16,5 @@ import com.project.search.entity.KeywordCount;
 public interface KeywordCountRepository extends JpaRepository<KeywordCount, String> {
 
 	List<KeywordCount> findTop10ByOrderByCountDesc();
-	
-	// 동시성 제어를 위해 비관적 락 구현
-//	@Lock(LockModeType.PESSIMISTIC_WRITE)
-//	@Query("select a from KeywordCount a where a.keyword = :keyword")
-//	KeywordCount findByIdForUpdate(@Param("keyword") String keyword);
 
 }

@@ -30,34 +30,34 @@ public class ApiUtil {
         this.env = env;
     }
 	
-	//RestTemplate¸¦ ÀÌ¿ëÇÑ api È£Ãâ
+	//RestTemplateë¥¼ ì´ìš©í•œ api í˜¸ì¶œ
 	public ResponseDto callGet(String keyword, String apiUrl, Pageable pageable) {
 		try {
 			RestTemplate restTemplate = new RestTemplate();
 			
-			//api È£Ãâ ÇÒ°÷¿¡ µû¸¥ Çì´õ ¼¼ÆÃ
+			//api í˜¸ì¶œ í• ê³³ì— ë”°ë¥¸ í—¤ë” ì„¸íŒ…
 			HttpEntity<String> header = getHeader(apiUrl);
-			//api È£Ãâ ÇÒ°÷¿¡ µû¸¥ URI ¼¼ÆÃ
+			//api í˜¸ì¶œ í• ê³³ì— ë”°ë¥¸ URI ì„¸íŒ…
 	        UriComponentsBuilder builder = getUri(keyword, apiUrl, pageable);
         	
         	ResponseEntity<Map> result = restTemplate.exchange(builder.toUriString(), HttpMethod.GET, header, Map.class);
-        	//api¸¦ ÅëÇØ ¹ŞÀº µ¥ÀÌÅÍ¸¦ responseDto·Î º¯È¯
+        	//apië¥¼ í†µí•´ ë°›ì€ ë°ì´í„°ë¥¼ responseDtoë¡œ ë³€í™˜
     		return new ResponseDto(result.getBody(), apiUrl, pageable);
 		} catch (HttpClientErrorException e) {
-			//Ä«Ä«¿À ÀÌ¸ç Ä«Ä«¿À ¼­¹ö ¹®Á¦·Î ÀÎÇØ exception Ã³¸®°¡ µÈ °æ¿ì naver api È£Ãâ
+			//ì¹´ì¹´ì˜¤ ì´ë©° ì¹´ì¹´ì˜¤ ì„œë²„ ë¬¸ì œë¡œ ì¸í•´ exception ì²˜ë¦¬ê°€ ëœ ê²½ìš° naver api í˜¸ì¶œ
 			if(apiUrl.equals("kakao") && e.getStatusCode().equals(HttpStatus.INTERNAL_SERVER_ERROR)) {
 				apiUrl = "naver";
 				return callGet(keyword, apiUrl, pageable);
 			}
-			//http status value¸¦ ÀÌ¿ëÇÏ¿© exception Ã³¸®
+			//http status valueë¥¼ ì´ìš©í•˜ì—¬ exception ì²˜ë¦¬
 			throw new CustomException(ErrorCode.valueOfStatus(e.getStatusCode().value()));
 		}
 	}
 	
-	//Çì´õ ¼¼ÆÃ
+	//í—¤ë” ì„¸íŒ…
 	public HttpEntity<String> getHeader(String apiUrl) {
 		HttpHeaders httpHeaders = new HttpHeaders();
-		// api¸¦ ¿äÃ»ÇÒ url ¸¶´Ù Çì´õÁ¤º¸°¡ ´Ù¸£¹Ç·Î if¹®À¸·Î Çì´õ¸¦ ¼¼ÆÃÇØÁØ´Ù.
+		// apië¥¼ ìš”ì²­í•  url ë§ˆë‹¤ í—¤ë”ì •ë³´ê°€ ë‹¤ë¥´ë¯€ë¡œ ifë¬¸ìœ¼ë¡œ í—¤ë”ë¥¼ ì„¸íŒ…í•´ì¤€ë‹¤.
 		if(apiUrl.equals("kakao")) {
         	httpHeaders.set("Authorization", env.getProperty("api.key.kakao"));
         }else if(apiUrl.equals("naver")) {
@@ -67,18 +67,18 @@ public class ApiUtil {
 		return new HttpEntity<>(httpHeaders);
 	}
 	
-	//URI ¼¼ÆÃ
+	//URI ì„¸íŒ…
 	public UriComponentsBuilder getUri(String keyword, String apiUrl, Pageable pageable) {
 		String url = env.getProperty("api.url." + apiUrl);
 		UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(url);
-		// api¸¦ ¿äÃ»ÇÒ url ¸¶´Ù paramÁ¤º¸°¡ ´Ù¸£¹Ç·Î if¹®À¸·Î paramÀ» ¼¼ÆÃÇØÁØ´Ù.
+		// apië¥¼ ìš”ì²­í•  url ë§ˆë‹¤ paramì •ë³´ê°€ ë‹¤ë¥´ë¯€ë¡œ ifë¬¸ìœ¼ë¡œ paramì„ ì„¸íŒ…í•´ì¤€ë‹¤.
 		if(apiUrl.equals("kakao")) {
 			builder = builder.queryParam("query", keyword)
 					.queryParam("page", pageable.getPageNumber())
 					.queryParam("size", pageable.getPageSize());
 		}else if(apiUrl.equals("naver")) {
 			try {
-				//³×ÀÌ¹ö API »ç¿ë¿¡´Â utf8 ÀÎÄÚµù ÇÊ¿ä
+				//ë„¤ì´ë²„ API ì‚¬ìš©ì—ëŠ” utf8 ì¸ì½”ë”© í•„ìš”
 				String encodeKeyword = URLEncoder.encode(keyword, "utf-8");
 			
 				builder = builder.queryParam("query", encodeKeyword)
@@ -89,10 +89,10 @@ public class ApiUtil {
 			}
 		}
 		
-		//Á¤·Ä °ªÀÌ ÀÖ´Â°æ¿ì ¼¼ÆÃ
+		//ì •ë ¬ ê°’ì´ ìˆëŠ”ê²½ìš° ì„¸íŒ…
 		if(pageable.getSort().toList().size() > 0) {
 			String sort = pageable.getSort().toList().get(0).getProperty();
-			//kakao·Î Á¶È¸ÇÏ¿´Áö¸¸ ¼­¹ö¿À·ù·Î ÀÎÇØ Á¶È¸ÇÏÁö ¸øÇÑ °æ¿ì naver·Î ÀçÁ¶È¸¸¦ ÇÏ±â¶§¹®¿¡ Á¤·Ä °ªÀ» ¹Ù²Ù¾î ÁØ´Ù.
+			//kakaoë¡œ ì¡°íšŒí•˜ì˜€ì§€ë§Œ ì„œë²„ì˜¤ë¥˜ë¡œ ì¸í•´ ì¡°íšŒí•˜ì§€ ëª»í•œ ê²½ìš° naverë¡œ ì¬ì¡°íšŒë¥¼ í•˜ê¸°ë•Œë¬¸ì— ì •ë ¬ ê°’ì„ ë°”ê¾¸ì–´ ì¤€ë‹¤.
 			if(apiUrl.equals("naver") && sort.equals("accuracy")) sort = "sim";
 			if(apiUrl.equals("naver") && sort.equals("recency")) sort = "date";
 			builder.queryParam("sort", sort);

@@ -31,25 +31,25 @@ public class SearchController {
     }
 	
 	/*
-	 * Ä«Ä«¿À ºí·Î±× °Ë»ö 
-	 * @ param = keyword / °Ë»öÅ°¿öµå,  
-	 * @ param = apiUrl / api È£ÃâÇÒ »çÀÌÆ® ¿¹)kakao, naver (ÃßÈÄ Ä«Ä«¿À API ÀÌ¿Ü¿¡ »õ·Î¿î °Ë»ö ¼Ò½º°¡ Ãß°¡µÉ ¼ö ÀÖÀ½À» °í·ÁÇØ¾ß ÇÕ´Ï´Ù.)
+	 * ì¹´ì¹´ì˜¤ ë¸”ë¡œê·¸ ê²€ìƒ‰ 
+	 * @ param = keyword / ê²€ìƒ‰í‚¤ì›Œë“œ,  
+	 * @ param = apiUrl / api í˜¸ì¶œí•  ì‚¬ì´íŠ¸ ì˜ˆ)kakao, naver (ì¶”í›„ ì¹´ì¹´ì˜¤ API ì´ì™¸ì— ìƒˆë¡œìš´ ê²€ìƒ‰ ì†ŒìŠ¤ê°€ ì¶”ê°€ë  ìˆ˜ ìˆìŒì„ ê³ ë ¤í•´ì•¼ í•©ë‹ˆë‹¤.)
 	 */
 	@RequestMapping(value="/search", method=RequestMethod.GET)
 	public ResponseEntity<ResponseDto> search(@RequestParam String keyword, @RequestParam String apiUrl, @PageableDefault(page = 1, size = 10) Pageable pageable){
-		//ÀÔ·ÂµÈ Å°¿öµå °Ë»ö ¸ñ·Ï Á¶È¸
+		//ì…ë ¥ëœ í‚¤ì›Œë“œ ê²€ìƒ‰ ëª©ë¡ ì¡°íšŒ
 		ResponseDto result = searchService.search(keyword, apiUrl, pageable);
-		//ÀÔ·ÂµÈ Å°¿öµå °Ë»öÈ½¼ö Áõ°¡
+		//ì…ë ¥ëœ í‚¤ì›Œë“œ ê²€ìƒ‰íšŸìˆ˜ ì¦ê°€
 		keywordCountService.keywordCountAdd(keyword);
 		return new ResponseEntity<ResponseDto>(result, HttpStatus.OK);
 	}
 	
 	/*
-	 * ºí·Î±× °Ë»ö ¼øÀ§ RANK Á¶È¸
+	 * ë¸”ë¡œê·¸ ê²€ìƒ‰ ìˆœìœ„ RANK ì¡°íšŒ
 	 */
 	@RequestMapping(value="/rank", method=RequestMethod.GET)
 	public ResponseEntity<List<KeywordCount>> rank(){
-		// ÇöÀç Å°¿öµå °Ë»ö ¼øÀ§ 1~10µî Á¶È¸
+		// í˜„ì¬ í‚¤ì›Œë“œ ê²€ìƒ‰ ìˆœìœ„ 1~10ë“± ì¡°íšŒ
 		List<KeywordCount> result = keywordCountService.getKeywordRank();
 		return new ResponseEntity<List<KeywordCount>>(result, HttpStatus.OK);
 	}

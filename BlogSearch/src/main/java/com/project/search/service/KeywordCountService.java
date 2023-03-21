@@ -16,13 +16,13 @@ public class KeywordCountService{
         this.keywordCountRepository = keywordCountRepository;
     }
 
-	//µ¿½Ã¼º Á¦¾î¸¦ À§ÇØ °Ë»öÈ½¼ö Áõ°¡ ¸Ş¼­µå¿¡ synchronized Àû¿ë
+	//ë™ì‹œì„± ì œì–´ë¥¼ ìœ„í•´ ê²€ìƒ‰íšŸìˆ˜ ì¦ê°€ ë©”ì„œë“œì— synchronized ì ìš©
 	public synchronized void keywordCountAdd(String keyword) {
 		KeywordCount data = keywordCountRepository.findById(keyword).orElse(null);
 		if(data != null) {
 			data.setCount(data.getCount()+1);
 		}else{
-			//½Å±Ô
+			//ì‹ ê·œ
 			data = new KeywordCount();
 			data.setKeyword(keyword);
 			data.setCount(1);
