@@ -21,13 +21,13 @@ public class ResponseDto {
 			if(apiUrl.equals("kakao")) {
 				//카카오 검색API response 
 				Map meta = (Map) searchResult.get("meta");
-				this.page = pageable.getPageNumber()+1;
+				this.page = pageable.getPageNumber();
 				this.size = pageable.getPageSize();
 				this.totalCount = Long.parseLong(meta.get("total_count").toString());
 				this.content = (List) searchResult.get("documents");
 			}else if(apiUrl.equals("naver")) {
 				//네이버 검색API response
-				this.page = pageable.getPageNumber()+1;
+				this.page = pageable.getPageNumber();
 				this.size = pageable.getPageSize(); 
 				this.totalCount = Long.parseLong(searchResult.get("total").toString());
 				this.content = (List) searchResult.get("items");
