@@ -14,18 +14,18 @@ import lombok.Getter;
 @Getter
 public enum ErrorCode {
 
-    //400 BAD_REQUEST Àß¸øµÈ ¿äÃ»
-	BAD_REQUEST(400, "Àß¸øµÈ ¿äÃ»ÀÔ´Ï´Ù."),
+    //400 BAD_REQUEST ì˜ëª»ëœ ìš”ì²­
+	BAD_REQUEST(400, "ì˜ëª»ëœ ìš”ì²­ì…ë‹ˆë‹¤."),
 
     //500 INTERNAL SERVER ERROR
-    INTERNAL_SERVER_ERROR(500, "¼­¹ö¿¡ ¹®Á¦°¡ ¹ß»ıÇÏ¿´½À´Ï´Ù.");
+    INTERNAL_SERVER_ERROR(500, "ì„œë²„ì— ë¬¸ì œê°€ ë°œìƒí•˜ì˜€ìŠµë‹ˆë‹¤.");
     
 	@Getter
     private final int status;
 	@Getter
     private final String message;
     
-	//status code¸¦ ÀÌ¿ëÇÏ¿© enum °ªÀ» °¡Á®¿À±â À§ÇØ ¼¼ÆÃ
+	//status codeë¥¼ ì´ìš©í•˜ì—¬ enum ê°’ì„ ê°€ì ¸ì˜¤ê¸° ìœ„í•´ ì„¸íŒ…
     private static final Map<Integer, String> codeMap = Collections.unmodifiableMap(Stream.of(values()).collect(Collectors.toMap(ErrorCode::getStatus, ErrorCode::name)));
     
     public static ErrorCode valueOfStatus(int httpStatus) {
