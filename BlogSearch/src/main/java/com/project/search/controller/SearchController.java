@@ -36,7 +36,7 @@ public class SearchController {
 	 * @ param = apiUrl / api 호출할 사이트 예)kakao, naver (추후 카카오 API 이외에 새로운 검색 소스가 추가될 수 있음을 고려해야 합니다.)
 	 */
 	@RequestMapping(value="/search", method=RequestMethod.GET)
-	public ResponseEntity<ResponseDto> search(@RequestParam String keyword, @RequestParam String apiUrl, @PageableDefault(size = 10) Pageable pageable){
+	public ResponseEntity<ResponseDto> search(@RequestParam String keyword, @RequestParam String apiUrl, @PageableDefault(page = 1, size = 10) Pageable pageable){
 		//입력된 키워드 검색 목록 조회
 		ResponseDto result = searchService.search(keyword, apiUrl, pageable);
 		//입력된 키워드 검색횟수 증가

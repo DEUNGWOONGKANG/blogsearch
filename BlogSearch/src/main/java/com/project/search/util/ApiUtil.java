@@ -74,7 +74,7 @@ public class ApiUtil {
 		// api를 요청할 url 마다 param정보가 다르므로 if문으로 param을 세팅해준다.
 		if(apiUrl.equals("kakao")) {
 			builder = builder.queryParam("query", keyword)
-					.queryParam("page", pageable.getPageNumber()+1)
+					.queryParam("page", pageable.getPageNumber())
 					.queryParam("size", pageable.getPageSize());
 		}else if(apiUrl.equals("naver")) {
 			try {
@@ -82,7 +82,7 @@ public class ApiUtil {
 				String encodeKeyword = URLEncoder.encode(keyword, "utf-8");
 			
 				builder = builder.queryParam("query", encodeKeyword)
-						.queryParam("start", pageable.getPageNumber()+1)
+						.queryParam("start", pageable.getPageNumber())
 						.queryParam("display", pageable.getPageSize());
 			} catch (UnsupportedEncodingException e) {
 				throw new CustomException(ErrorCode.BAD_REQUEST);
