@@ -25,6 +25,15 @@ GET /rank
 ### parameter
 ### 호출예시
 * http://localhost:8080/rank
+***
+## 3. 키워드 검색횟수 증가
+POST /usekeyword
+* 키워드 검색횟수를 증가시키는 endpoint <br>
+* 블로그 검색시 해당 로직을 포함하였으나 페이지 변경시에도 증가되므로 endpoint 분리 처리
+### parameter
+* required String keyword (키워드 검색)
+### 호출예시
+* http://localhost:8080/usekeyword?keyword=카카오
 
 jar dowun load url <br>
-https://drive.google.com/file/d/1YgoeZQP49W36g2BiVg51t3H0fePdA33V/view?usp=share_link
+https://drive.google.com/file/d/1cK7RaB4J3BXZFiS_m17HOpPntU2OcjWf/view?usp=sharing
