@@ -25,3 +25,6 @@ GET /rank
 ### parameter
 ### 호출예시
 * http://localhost:8080/rank
+
+jar dowun load url <br>
+https://drive.google.com/file/d/1YgoeZQP49W36g2BiVg51t3H0fePdA33V/view?usp=share_link
