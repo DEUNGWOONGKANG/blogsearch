@@ -9,7 +9,7 @@ import lombok.Getter;
 
 @Getter
 public class ResponseDto {
-		//API를 통해 조회된 목록
+		//API를 통해 조회된 목록(각 사이트별로 구성이 달라 map으로 처리)
 		private List<Map<String, Object>> content;
 		
 		//페이징 처리를 위한 객체들

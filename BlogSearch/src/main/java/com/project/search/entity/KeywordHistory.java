@@ -1,7 +1,11 @@
 package com.project.search.entity;
 
+import java.time.LocalDateTime;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -13,12 +17,16 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-@Table(name="keyword_count")
-public class KeywordCount {
+@Table(name="keyword_history")
+public class KeywordHistory {
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id")
+	Long id;
+	
 	@Column(name = "keyword")
 	String keyword;
 	
-	@Column(name = "count")
-	long count;
+	@Column(name = "searchdt")
+	LocalDateTime searchdt;
 }

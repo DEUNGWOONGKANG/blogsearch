@@ -9,42 +9,37 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import com.project.search.entity.KeywordCount;
+
+import com.project.search.dto.KeywordCountInterface;
 
 @SpringBootTest
 class KeywordCountServiceTest {
 	@Autowired
-    private KeywordCountService keywordCountService;
+    private KeywordHistoryService keywordHistoryService;
 	
 	@Test
-	@DisplayName("Å°¿öµå °Ë»öÈ½¼ö Áõ°¡ µ¿½Ã¼º Å×½ºÆ®")
+	@DisplayName("í‚¤ì›Œë“œ ê²€ìƒ‰ì‹œ í•´ë‹¹ í‚¤ì›Œë“œ ê²€ìƒ‰íšŸìˆ˜ count ì¦ê°€ í…ŒìŠ¤íŠ¸")
 	void keywordCountAddTest() throws InterruptedException  {
-		int numberOfThreads = 2;
+		int numberOfThreads = 5;
         ExecutorService service = Executors.newFixedThreadPool(numberOfThreads);
         CountDownLatch latch = new CountDownLatch(numberOfThreads);
         
-        String keyword = "¹öÁî";
+        String keyword = "ì²´í¬ì¹´ë“œ";
         
-        System.out.println("########## Å°¿öµå °Ë»öÈ½¼ö Áõ°¡ µ¿½Ã¼º Å×½ºÆ® ½ÃÀÛ ##########");
-        
-        service.execute(() -> {
-        	keywordCountService.keywordCountAdd(keyword);
-            latch.countDown();
-        });
-        service.execute(() -> {
-        	keywordCountService.keywordCountAdd(keyword);
-            latch.countDown();
-        });
-        
+        for(int i=0; i<numberOfThreads; i++) {
+        	service.execute(() -> {
+        		keywordHistoryService.useKeyword(keyword);
+                latch.countDown();
+            });
+        }
         latch.await();
         
-        System.out.println("########## Å°¿öµå °Ë»öÈ½¼ö Áõ°¡ µ¿½Ã¼º Å×½ºÆ® °ËÁõ ##########");
-        
-        List<KeywordCount> rank = keywordCountService.getKeywordRank();
+        //ê²€ìƒ‰ì–´ ëž­í‚¹ìœ¼ë¡œ í…ŒìŠ¤íŠ¸
+        List<KeywordCountInterface> rank = keywordHistoryService.getKeywordRank();
         int i = 1;
-        for(KeywordCount k : rank) {
-        	System.out.println("########## ·©Å· " + i );
-        	System.out.println(k.getKeyword() + " ===== " + k.getCount() + "¹ø" );
+        for(KeywordCountInterface k : rank) {
+        	System.out.println("########## ê²€ìƒ‰ì–´ ëž­í‚¹ " + i );
+        	System.out.println("########## í‚¤ì›Œë“œ : " + k.getKeyword() + " ===== " + k.getCount() + " íšŒ");
         	i++;
         }
 	}

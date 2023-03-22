@@ -19,31 +19,30 @@ class SearchServiceTest {
     private SearchService searchService;
 	
 	@Test
-	@DisplayName("ºí·Î±× °Ë»ö Å×½ºÆ®")
+	@DisplayName("kakao, naver API ì‚¬ìš©í•˜ì—¬ ë¸”ë¡œê·¸ ê²€ìƒ‰ í…ŒìŠ¤íŠ¸")
 	void searchTest() {
-		System.out.println("########## Ä«Ä«¿À ºí·Î±× °Ë»ö Å×½ºÆ® ##########");
+		System.out.println("########## kakao ë¸”ë¡œê·¸ ê²€ìƒ‰ í…ŒìŠ¤íŠ¸ ##########");
 		Pageable paging = PageRequest.of(0, 10, Sort.Direction.ASC, "accuracy");
-		ResponseDto result = searchService.search("Ä«Ä«¿À", "kakao", paging);
+		ResponseDto result = searchService.search("Ä«Ä«ï¿½ï¿½", "kakao", paging);
 		List<Map<String, Object>> blogList = result.getContent();
 		System.out.println("PAGE : " + result.getPage());
 		System.out.println("PAGE SIZE : " + result.getSize());
         System.out.println("TOTAL COUNT : " + result.getTotalCount());
         for(int i=0; i<blogList.size(); i++) {
-        	System.out.println("### ¼ø¼­  ### " + (i+1));
-        	System.out.println("Á¦¸ñ : " + blogList.get(i).get("title"));
+        	System.out.println("### kakao ëª©ë¡  ### " + (i+1));
+        	System.out.println("ï¿½ï¿½ï¿½ï¿½ : " + blogList.get(i).get("title"));
         }
         
-        
-        System.out.println("########## ³×ÀÌ¹ö ºí·Î±× °Ë»ö Å×½ºÆ® ##########");
+        System.out.println("########## naver ë¸”ë¡œê·¸ ê²€ìƒ‰ í…ŒìŠ¤íŠ¸ ##########");
         paging = PageRequest.of(0, 10, Sort.Direction.ASC, "sim");
-        result = searchService.search("³×ÀÌ¹ö", "naver", paging);
+        result = searchService.search("ï¿½ï¿½ï¿½Ì¹ï¿½", "naver", paging);
         blogList = result.getContent();
         System.out.println("PAGE : " + result.getPage());
         System.out.println("PAGE SIZE : " + result.getSize());
         System.out.println("TOTAL COUNT : " + result.getTotalCount());
         for(int i=0; i<blogList.size(); i++) {
-        	System.out.println("### ¼ø¼­  ### " + (i+1));
-        	System.out.println("Á¦¸ñ : " + blogList.get(i).get("title"));
+        	System.out.println("### naver ëª©ë¡  ### " + (i+1));
+        	System.out.println("ï¿½ï¿½ï¿½ï¿½ : " + blogList.get(i).get("title"));
         }
 	}
 }
