@@ -46,7 +46,7 @@ public class SearchController {
 	 * 키워드 검색 history 저장
 	 * @ param = keyword / 검색키워드
 	 */
-	@RequestMapping(value="/usekeyword", method=RequestMethod.GET)
+	@RequestMapping(value="/usekeyword", method=RequestMethod.POST)
 	public ResponseEntity usekeyword(@RequestParam String keyword){
 		//입력된 키워드 history 추가
 		keywordHistoryService.useKeyword(keyword);
