@@ -12,7 +12,7 @@ import com.project.search.entity.KeywordHistory;
 @Repository
 public interface KeywordHistoryRepository extends JpaRepository<KeywordHistory, String> {
 	@Query(value = "select keyword, count(1) as count "
-			+ "from keyword_count  "
+			+ "from keyword_history  "
 			+ "group by keyword "
 			+ "order by count desc limit 10", nativeQuery = true)
 	List<KeywordCountInterface> findTop10Keyword();

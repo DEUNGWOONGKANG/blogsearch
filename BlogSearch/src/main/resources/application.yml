@@ -2,7 +2,7 @@ spring:
   #Database를 H2로 사용하기 위해 H2연결 정보 입력
   datasource:
     driver-class-name: org.h2.Driver  # Database를 H2로 사용하겠다.
-    url: jdbc:h2:~/blogsearch  # H2 접속 정보
+    url: jdbc:h2:~/blogsearch;AUTO_SERVER=true  # H2 접속 정보
     username: sa
     password: 
   jpa: 

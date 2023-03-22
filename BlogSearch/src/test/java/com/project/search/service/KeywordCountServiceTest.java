@@ -24,7 +24,7 @@ class KeywordCountServiceTest {
         ExecutorService service = Executors.newFixedThreadPool(numberOfThreads);
         CountDownLatch latch = new CountDownLatch(numberOfThreads);
         
-        String keyword = "체크카드";
+        String keyword = "신용카드";
         
         for(int i=0; i<numberOfThreads; i++) {
         	service.execute(() -> {
